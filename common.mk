@@ -1,4 +1,4 @@
-PROJECT = maybe
+PROJECT = calrissian
 LIB = $(PROJECT)
 DEPS = ./deps
 BIN_DIR = ./bin
@@ -92,11 +92,11 @@ push-all:
 	git push upstream --tags
 
 install: compile
-	@echo "Installing maybe ..."
+	@echo "Installing calrissian ..."
 	@PATH=$(SCRIPT_PATH) lfetool install lfe
 
 upload: $(EXPM) get-version
-	@echo "Preparing to upload maybe ..."
+	@echo "Preparing to upload calrissian ..."
 	@echo
 	@echo "Package file:"
 	@echo

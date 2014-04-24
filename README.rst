@@ -1,13 +1,14 @@
 ###########
-maybe
+calrissian
 ###########
 
 
 Introduction
 ============
 
-Add content to me here!
-
+Calrissian is an implementation of monads in LFE, inspired by
+`erlando`_, mostly as a learning exercise. So far, only the maybe
+monad is supported.
 
 Dependencies
 ------------
@@ -31,7 +32,7 @@ Just add it to your ``rebar.config`` deps:
 
     {deps, [
         ...
-        {maybe, ".*", {git, "git@github.com:YOURNAME/maybe.git", "master"}}
+        {calrissian, ".*", {git, "git@github.com:correl/calrissian.git", "master"}}
       ]}.
 
 
@@ -46,10 +47,11 @@ And then do the usual:
 Usage
 =====
 
-Add content to me here!
+Coming soon          
 
 .. Links
 .. -----
+.. _erlando: https://github.com/rabbitmq/erlando
 .. _rebar: https://github.com/rebar/rebar
 .. _LFE: https://github.com/rvirding/lfe
 .. _lfeunit: https://github.com/lfe/lfeunit

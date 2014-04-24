@@ -1,7 +1,7 @@
 Expm.Package.new(
-  name: "maybe",
-  description: "maybe DESCRIPTION",
+  name: "calrissian",
+  description: "Monads for LFE",
   version: "0.0.1",
-  keywords: ["LFE", "Lisp", "Library", "API"],
-  maintainers: [[name: "YOUR NAME", email: "YOUR@EMAIL.com"]],
-  repositories: [[github: "YOUR_GITHUB_NAME/maybe]])
+  keywords: ["LFE", "Lisp", "Library", "Monads"],
+  maintainers: [[name: "Correl Roush", email: "correl@gmail.com"]],
+  repositories: [[github: "correl/calrissian"]])
