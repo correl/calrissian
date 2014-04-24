@@ -1,4 +1,4 @@
-(defmodule unit-maybe-tests
+(defmodule unit-maybe-monad-tests
   (export all)
   (import
     (from lfeunit-util
@@ -6,27 +6,27 @@
       (check-wrong-assert-exception 2))))
 
 (include-lib "deps/lfeunit/include/lfeunit-macros.lfe")
-(include-lib "include/maybe.lfe")
+(include-lib "include/monads.lfe")
 
 (deftest bind-nothing
   (is-equal 'nothing
-            (maybe:>>= 'nothing
+            (>>= maybe-monad 'nothing
                        (lambda (x) (+ 5 x)))))
 
 (deftest bind-nothing-error
   (is-equal 'nothing
-            (maybe:>>= 'nothing
+            (>>= maybe-monad 'nothing
                        (lambda (_) (error 'bad-func)))))
 
 (deftest bind-five
   (is-equal 10
-            (maybe:>>= (tuple 'just 5)
+            (>>= maybe-monad (tuple 'just 5)
                        (lambda (x) (+ 5 x)))))
 
 (deftest bind-fold
   (is-equal #(just 3)
-            (let ((minc (lambda (x) (maybe:return (+ 1 x))))
-                  (bind (lambda (f m) (maybe:>>= m f))))
+            (let ((minc (lambda (x) (return maybe-monad (+ 1 x))))
+                  (bind (lambda (f m) (>>= maybe-monad m f))))
               (lists:foldr bind
                            #(just 0)
                            (list minc
@@ -35,15 +35,17 @@
 
 (deftest >>
   (is-equal #(just 3)
-            (maybe:>> #(just 5) #(just 3))))
+            (>> maybe-monad #(just 5) #(just 3))))
 
 (deftest do-bindings
   (is-equal #(just 3)
-            (do (a <- #(just 1))
-                (b <- #(just 2))
-              (maybe:return (+ a b)))))
+            (do maybe-monad
+                (a <- #(just 1))
+              (b <- #(just 2))
+              (return maybe-monad (+ a b)))))
 
 (deftest do-nobindings
   (is-equal #(just 3)
-            (do #(just 5)
-                #(just 3))))
+            (do maybe-monad
+                #(just 5)
+              #(just 3))))
