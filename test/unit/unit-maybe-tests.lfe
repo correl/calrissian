@@ -37,8 +37,13 @@
   (is-equal #(just 3)
             (maybe:>> #(just 5) #(just 3))))
 
-(deftest do
+(deftest do-bindings
   (is-equal #(just 3)
             (do (a <- #(just 1))
                 (b <- #(just 2))
               (maybe:return (+ a b)))))
+
+(deftest do-nobindings
+  (is-equal #(just 3)
+            (do #(just 5)
+                #(just 3))))
