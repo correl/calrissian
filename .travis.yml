@@ -1,0 +1,9 @@
+language: erlang
+script: "make check-travis"
+notifications:
+  #irc: "irc.freenode.org#YOUR-PROJECT-CHANNEL"
+  recipients:
+    #- YOU@YOUR.DOMAIN
+otp_release:
+  - R16B03
+  - R15B03
