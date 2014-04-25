@@ -38,13 +38,13 @@
 
 (deftest do-bindings
   (is-equal #(just 3)
-            (do maybe-monad
+            (do-m maybe-monad
                 (a <- #(just 1))
               (b <- #(just 2))
               (return maybe-monad (+ a b)))))
 
 (deftest do-nobindings
   (is-equal #(just 3)
-            (do maybe-monad
+            (do-m maybe-monad
                 #(just 5)
               #(just 3))))

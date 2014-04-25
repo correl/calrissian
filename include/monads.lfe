@@ -1,4 +1,4 @@
-(defmacro do args
+(defmacro do-m args
   (let ((monad (car args))
         (statements (cdr args)))
     (monad:do-transform monad statements)))
@@ -19,7 +19,7 @@
      ,list))
 
 (defmacro mcons (monad m mlist)
-  `(do ,monad
-       (x <- ,m)
-     (rest <- ,mlist)
-     (return ,monad (cons x rest))))
+  `(do-m ,monad
+         (x <- ,m)
+         (rest <- ,mlist)
+         (return ,monad (cons x rest))))

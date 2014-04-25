@@ -12,14 +12,14 @@
                      (return ,monad 1))))
      (deftest monad-do
        (is-equal (return ,monad 'ok)
-                 (do ,monad
-                     (return ,monad 'ignored)
-                     (return ,monad 'ok))))
+                 (do-m ,monad
+                       (return ,monad 'ignored)
+                       (return ,monad 'ok))))
      (deftest monad-do-binding
        (is-equal (return ,monad 9)
-                 (do ,monad
-                     (a <- (return ,monad 3))
-                     (return ,monad (* a a)))))
+                 (do-m ,monad
+                       (a <- (return ,monad 3))
+                       (return ,monad (* a a)))))
      (deftest monad-sequence
        (is-equal (return ,monad (list 1 2 3))
                  (sequence ,monad (list (return ,monad 1)
@@ -50,26 +50,26 @@
      (deftest monad-do-left-identity
        (let ((a 3)
              (f (lambda (n) (return ,monad (* 3 n)))))
-         (is-equal (do ,monad (a' <- (return ,monad a))
-                     (funcall f a'))
-                   (do ,monad (funcall f a)))))
+         (is-equal (do-m ,monad (a' <- (return ,monad a))
+                         (funcall f a'))
+                   (do-m ,monad (funcall f a)))))
      
      (deftest monad-do-right-identity
        (let ((m (return ,monad 3)))
-         (is-equal (do ,monad (x <- m)
-                     (return ,monad x))
-                   (do ,monad m))))
+         (is-equal (do-m ,monad (x <- m)
+                         (return ,monad x))
+                   (do-m ,monad m))))
      
      (deftest monad-do-associativity
        (let ((m (return ,monad 3))
              (f (lambda (n) (return ,monad (* 3 n))))
              (g (lambda (n) (return ,monad (+ 5 n)))))
-         (is-equal (do ,monad (y <- (do ,monad (x <- m)
-                                           (funcall f x)))
-                     (funcall g y))
-                   (do ,monad (x <- m)
-                     (do ,monad (y <- (funcall f x))
-                       (funcall g y))))))
+         (is-equal (do-m ,monad (y <- (do-m ,monad (x <- m)
+                                            (funcall f x)))
+                         (funcall g y))
+                   (do-m ,monad (x <- m)
+                         (do-m ,monad (y <- (funcall f x))
+                               (funcall g y))))))
      ))
 
 (defmacro test-monad (monad)
