@@ -11,7 +11,9 @@
   {modules,
    [
     'monad',
-    'maybe-monad'
+    'maybe-monad',
+    'identity-monad',
+    'error-monad'
    ]},
 
   %% All of the registered names the application uses. This can be ignored.
