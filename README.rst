@@ -7,8 +7,8 @@ Introduction
 ============
 
 Calrissian is an implementation of monads in LFE, inspired by
-`erlando`_, mostly as a learning exercise. So far, only the maybe
-monad is supported.
+`erlando`_, mostly as a learning exercise. So far, only the Maybe and
+Identity monads are supported.
 
 Dependencies
 ------------
