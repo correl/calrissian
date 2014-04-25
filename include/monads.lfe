@@ -12,6 +12,9 @@
 (defmacro return (monad expr)
   `(: ,monad return ,expr))
 
+(defmacro fail (monad expr)
+  `(: ,monad fail ,expr))
+
 (defmacro sequence (monad list)
   `(: lists foldr
      (lambda (m acc) (mcons ,monad m acc))
