@@ -11,22 +11,17 @@
 
 (test-monad maybe-monad)
 
-(deftest bind-short-circuit-value
+(deftest nothing-short-circuits-value
   (is-equal 'nothing
             (>>= maybe-monad 'nothing
                        (lambda (x) (+ 5 x)))))
 
-(deftest bind-short-circuit-error
+(deftest nothing-short-circuits-error
   (is-equal 'nothing
             (>>= maybe-monad 'nothing
                        (lambda (_) (error 'bad-func)))))
 
-(deftest bind
-  (is-equal 10
-            (>>= maybe-monad (tuple 'just 5)
-                       (lambda (x) (+ 5 x)))))
-
-(deftest bind-fold
+(deftest fold-increment-value
   (is-equal #(just 3)
             (let ((minc (lambda (x) (return maybe-monad (+ 1 x))))
                   (bind (lambda (f m) (>>= maybe-monad m f))))
@@ -35,16 +30,3 @@
                            (list minc
                                  minc
                                  minc)))))
-
-(deftest do-bindings
-  (is-equal #(just 3)
-            (do-m maybe-monad
-                (a <- #(just 1))
-              (b <- #(just 2))
-              (return maybe-monad (+ a b)))))
-
-(deftest do-nobindings
-  (is-equal #(just 3)
-            (do-m maybe-monad
-                #(just 5)
-              #(just 3))))
