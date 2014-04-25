@@ -7,18 +7,21 @@
 
 (include-lib "deps/lfeunit/include/lfeunit-macros.lfe")
 (include-lib "include/monads.lfe")
+(include-lib "include/monad-tests.lfe")
 
-(deftest bind-nothing
+(test-monad-laws maybe-monad)
+
+(deftest bind-short-circuit-value
   (is-equal 'nothing
             (>>= maybe-monad 'nothing
                        (lambda (x) (+ 5 x)))))
 
-(deftest bind-nothing-error
+(deftest bind-short-circuit-error
   (is-equal 'nothing
             (>>= maybe-monad 'nothing
                        (lambda (_) (error 'bad-func)))))
 
-(deftest bind-five
+(deftest bind
   (is-equal 10
             (>>= maybe-monad (tuple 'just 5)
                        (lambda (x) (+ 5 x)))))
