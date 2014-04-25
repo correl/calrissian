@@ -1,7 +1,7 @@
 ###########
 calrissian
 ###########
-
+.. image:: https://travis-ci.org/correl/calrissian.svg?branch=master   :target: https://travis-ci.org/correl/calrissian
 
 Introduction
 ============
