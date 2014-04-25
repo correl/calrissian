@@ -11,3 +11,15 @@
 
 (defmacro return (monad expr)
   `(: ,monad return ,expr))
+
+(defmacro sequence (monad list)
+  `(: lists foldr
+     (lambda (m acc) (mcons ,monad m acc))
+     (return ,monad [])
+     ,list))
+
+(defmacro mcons (monad m mlist)
+  `(do ,monad
+       (x <- ,m)
+     (rest <- ,mlist)
+     (return ,monad (cons x rest))))

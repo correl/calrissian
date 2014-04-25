@@ -9,7 +9,7 @@
 (include-lib "include/monads.lfe")
 (include-lib "include/monad-tests.lfe")
 
-(test-monad-laws maybe-monad)
+(test-monad maybe-monad)
 
 (deftest bind-short-circuit-value
   (is-equal 'nothing
@@ -35,10 +35,6 @@
                            (list minc
                                  minc
                                  minc)))))
-
-(deftest >>
-  (is-equal #(just 3)
-            (>> maybe-monad #(just 5) #(just 3))))
 
 (deftest do-bindings
   (is-equal #(just 3)

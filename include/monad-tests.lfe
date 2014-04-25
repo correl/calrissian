@@ -1,3 +1,32 @@
+(defmacro test-monad-functions (monad)
+  `(progn
+     (deftest monad->>=
+       (is-equal (return ,monad 2)
+                 (>>= ,monad
+                      (return ,monad 1)
+                      (lambda (n) (return ,monad (+ 1 n))))))
+     (deftest monad->>
+       (is-equal (return ,monad 1)
+                 (>> ,monad
+                     (return ,monad 5)
+                     (return ,monad 1))))
+     (deftest monad-do
+       (is-equal (return ,monad 'ok)
+                 (do ,monad
+                     (return ,monad 'ignored)
+                     (return ,monad 'ok))))
+     (deftest monad-do-binding
+       (is-equal (return ,monad 9)
+                 (do ,monad
+                     (a <- (return ,monad 3))
+                     (return ,monad (* a a)))))
+     (deftest monad-sequence
+       (is-equal (return ,monad (list 1 2 3))
+                 (sequence ,monad (list (return ,monad 1)
+                                        (return ,monad 2)
+                                        (return ,monad 3)))))
+     ))
+
 (defmacro test-monad-laws (monad)
   `(progn
      (deftest monad-left-identity
@@ -42,3 +71,8 @@
                      (do ,monad (y <- (funcall f x))
                        (funcall g y))))))
      ))
+
+(defmacro test-monad (monad)
+  `(progn
+     (test-monad-functions ,monad)
+     (test-monad-laws ,monad)))
