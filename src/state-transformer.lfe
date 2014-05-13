@@ -16,10 +16,10 @@
    (lambda (_) (call inner-monad 'fail reason))))
 
 (defun >>=
-  ((x f (tuple 'maybe-transformer inner-monad))
+  ((x f (tuple 'state-transformer inner-monad))
    (lambda (s)
      (call inner-monad '>>=
-       (funcall x f)
+       (funcall x s)
        (match-lambda (((tuple x1 s1)) (funcall (funcall f x1) s1)))))))
 
 (defun get (_)
@@ -39,13 +39,15 @@
   ((m s (tuple 'state-transformer inner-monad))
    (call inner-monad '>>=
      (funcall m s)
-     (match-lambda (((tuple x s1)) x)))))
+     (match-lambda (((tuple x s1))
+                    (call inner-monad 'return x))))))
 
 (defun exec
   ((m s (tuple 'state-transformer inner-monad))
    (call inner-monad '>>=
      (funcall m s)
-     (match-lambda (((tuple x s1)) s1)))))
+     (match-lambda (((tuple x s1))
+                    (call inner-monad 'return s1))))))
 
 (defun run
   ((m s (tuple 'state-transformer inner-monad))

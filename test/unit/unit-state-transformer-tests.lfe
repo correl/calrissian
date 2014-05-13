@@ -8,9 +8,6 @@
 (include-lib "deps/lfeunit/include/lfeunit-macros.lfe")
 (include-lib "include/monads.lfe")
 
-(deftestskip foo
-  (is 'false))
-
 (deftest eval
   (is-equal 5
             (let* ((m (: state-transformer new 'identity-monad))
@@ -23,13 +20,23 @@
                    (mval (call m 'return 5)))
               (call m 'exec mval 'foo))))
 
-(deftest exec-double
+(deftest exec-modify
   (is-equal 10
             (let ((m (: state-transformer new 'identity-monad)))
               (call m 'exec
                 (do-m m
                       (call m 'modify (lambda (x) (* x 2))))
                 5))))
+
+(deftest exec-modify-multiple
+  (is-equal 30
+            (let ((m (: state-transformer new 'identity-monad)))
+              (call m 'exec
+                (do-m m
+                      (call m 'modify (lambda (x) (+ x 5)))
+                      (call m 'modify (lambda (x) (* x 2)))
+                      (call m 'return 123))
+                10))))
 
 (deftest exec-fail
   (is-throw #(error value)
