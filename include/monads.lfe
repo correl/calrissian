@@ -4,25 +4,16 @@
     (monad:do-transform monad statements)))
 
 (defmacro >>= (monad m f)
-  (if (: lfe-utils atom? monad)
-    `(call ',monad '>>= ,m ,f)
-    `(call ,monad '>>= ,m ,f)))
+  `(call ,monad '>>= ,m ,f))
 
 (defmacro >> (monad m1 m2)
-  (let ((f `(lambda (_) ,m2)))
-    (if (: lfe-utils atom? monad)
-      `(call ',monad '>>= ,m1 ,f)
-      `(call ,monad '>>= ,m1 ,f))))
+  `(call ,monad '>>= ,m1 (lambda (_) , m2)))
 
 (defmacro return (monad expr)
-  (if (: lfe-utils atom? monad)
-    `(call ',monad 'return ,expr)
-    `(call ,monad 'return ,expr)))
+  `(call ,monad 'return ,expr))
 
 (defmacro fail (monad expr)
-  (if (: lfe-utils atom? monad)
-    `(call ',monad 'fail ,expr)
-    `(call ,monad 'fail ,expr)))
+  `(call ,monad 'fail ,expr))
 
 (defmacro sequence (monad list)
   `(: lists foldr
