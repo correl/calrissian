@@ -28,15 +28,25 @@
                       (call m 'modify (lambda (x) (* x 2))))
                 5))))
 
-(deftest exec-modify-multiple
+(deftest exec-put-and-modify
   (is-equal 30
             (let ((m (: state-transformer new 'identity-monad)))
               (call m 'exec
                 (do-m m
+                      (call m 'put 10)
                       (call m 'modify (lambda (x) (+ x 5)))
                       (call m 'modify (lambda (x) (* x 2)))
                       (call m 'return 123))
-                10))))
+                3))))
+
+(deftest exec-bind-and-modify
+  (is-equal 16
+            (let ((m (: state-transformer new 'identity-monad)))
+              (call m 'exec
+                (do-m m
+                      (a <- (call m 'modify-and-return (lambda (x) (+ x 5))))
+                      (call m 'modify (lambda (x) (+ x a))))
+                3))))
 
 (deftest exec-fail
   (is-throw #(error value)

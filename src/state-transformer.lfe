@@ -35,6 +35,11 @@
    (lambda (s)
      (tuple 'ok (call inner-monad 'return (funcall f s))))))
 
+(defun modify-and-return
+  ((f (tuple 'state-transformer inner-monad))
+   (lambda (s)
+     (call inner-monad 'return (funcall f s)))))
+
 (defun eval
   ((m s (tuple 'state-transformer inner-monad))
    (call inner-monad '>>=
