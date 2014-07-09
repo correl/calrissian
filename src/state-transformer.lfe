@@ -1,5 +1,4 @@
 (defmodule state-transformer
-  (behaviour monad)
   (export all))
 
 (include-lib "include/monads.lfe")
@@ -38,7 +37,8 @@
 (defun modify-and-return
   ((f (tuple 'state-transformer inner-monad))
    (lambda (s)
-     (call inner-monad 'return (funcall f s)))))
+     (let ((newstate (call inner-monad 'return (funcall f s))))
+       (tuple newstate newstate)))))
 
 (defun eval
   ((m s (tuple 'state-transformer inner-monad))
