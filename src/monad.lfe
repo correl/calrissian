@@ -1,8 +1,8 @@
 (defmodule monad
-  (export (behaviour-info 1)
+  (export (behaviour_info 1)
           (do-transform 2)))
 
-(defun behaviour-info
+(defun behaviour_info
   (('callbacks) (list #(>>= 2)
                       #(return 1)
                       #(fail 1)))
