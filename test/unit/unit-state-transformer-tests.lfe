@@ -7,6 +7,9 @@
 
 (include-lib "deps/lfeunit/include/lfeunit-macros.lfe")
 (include-lib "include/monads.lfe")
+(include-lib "include/monad-tests.lfe")
+
+(test-monad (: state-transformer new 'identity-monad))
 
 (deftest eval
   (is-equal 5
