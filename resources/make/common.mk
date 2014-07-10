@@ -3,19 +3,33 @@ LIB = $(PROJECT)
 DEPS = ./deps
 BIN_DIR = ./bin
 EXPM = $(BIN_DIR)/expm
-LFETOOL=$(BIN_DIR)/lfetool
+
 SOURCE_DIR = ./src
 OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
-SCRIPT_PATH=.:./bin:$(PATH):/usr/local/bin
+SCRIPT_PATH=$(DEPS)/lfe/bin:.:./bin:"$(PATH)":/usr/local/bin
+ERL_LIBS=$(shell $(LFETOOL) info erllibs)
+EMPTY =
+ifeq ($(shell which lfetool),$EMPTY)
+	LFETOOL=$(BIN_DIR)/lfetool
+else
+	LFETOOL=lfetool
+endif
+OS := $(shell uname -s)
+ifeq ($(OS),Linux)
+        HOST=$(HOSTNAME)
+endif
+ifeq ($(OS),Darwin)
+        HOST = $(shell scutil --get ComputerName)
+endif
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 $(LFETOOL): $(BIN_DIR)
 	@[ -f $(LFETOOL) ] || \
-	curl -o ./lfetool https://raw.github.com/lfe/lfetool/master/lfetool && \
+	curl -L -o ./lfetool https://raw.github.com/lfe/lfetool/master/lfetool && \
 	chmod 755 ./lfetool && \
 	mv ./lfetool $(BIN_DIR)
 
@@ -28,7 +42,7 @@ $(EXPM): $(BIN_DIR)
 
 get-deps:
 	@echo "Getting dependencies ..."
-	@rebar get-deps
+	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd get-deps || rebar get-deps
 	@PATH=$(SCRIPT_PATH) lfetool update deps
 
 clean-ebin:
@@ -40,27 +54,27 @@ clean-eunit:
 
 compile: get-deps clean-ebin
 	@echo "Compiling project code and dependencies ..."
-	@rebar compile
+	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd compile || rebar compile
 
 compile-no-deps: clean-ebin
 	@echo "Compiling only project code ..."
-	@rebar compile skip_deps=true
+	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd compile skip_deps=true || rebar compile skip_deps=true
 
 compile-tests:
 	@PATH=$(SCRIPT_PATH) lfetool tests build
 
 shell: compile
-	@clear
+	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
-	@PATH=$(SCRIPT_PATH) lfetool repl lfe
+	@PATH=$(SCRIPT_PATH) lfetool repl
 
 shell-no-deps: compile-no-deps
-	@clear
+	@which clear >/dev/null 2>&1 && clear || printf "\033c"
 	@echo "Starting shell ..."
 	@PATH=$(SCRIPT_PATH) lfetool repl
 
 clean: clean-ebin clean-eunit
-	@rebar clean
+	@which rebar.cmd >/dev/null 2>&1 && rebar.cmd clean || rebar clean
 
 check-unit-only:
 	@PATH=$(SCRIPT_PATH) lfetool tests unit
