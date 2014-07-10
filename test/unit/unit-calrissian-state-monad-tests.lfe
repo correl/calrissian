@@ -1,4 +1,4 @@
-(defmodule unit-state-monad-tests
+(defmodule unit-calrissian-state-monad-tests
   (export all)
   (import
     (from lfeunit-util
@@ -9,4 +9,4 @@
 (include-lib "include/monads.lfe")
 (include-lib "include/monad-tests.lfe")
 
-(test-monad 'state-monad)
+(test-monad 'calrissian-state-monad)

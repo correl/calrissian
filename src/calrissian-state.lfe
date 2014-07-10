@@ -1,4 +1,4 @@
-(defmodule state
+(defmodule calrissian-state
   (export (behaviour_info 1)))
 
 (defun behaviour_info

@@ -1,4 +1,4 @@
-(defmodule unit-identity-monad-tests
+(defmodule unit-calrissian-identity-monad-tests
   (export all)
   (import
     (from lfeunit-util
@@ -9,12 +9,12 @@
 (include-lib "include/monads.lfe")
 (include-lib "include/monad-tests.lfe")
 
-(test-monad 'identity-monad)
+(test-monad 'calrissian-identity-monad)
 
 (deftest identity
   (is-equal 'ok
-            (return 'identity-monad 'ok)))
+            (return 'calrissian-identity-monad 'ok)))
 
 (deftest fail-with-error
   (is-throw #(error value)
-            (fail 'identity-monad 'value)))
+            (fail 'calrissian-identity-monad 'value)))

@@ -1,5 +1,5 @@
-(defmodule error-monad
-  (behaviour monad)
+(defmodule calrissian-error-monad
+  (behaviour calrissian-monad)
   (export (>>= 2)
           (return 1)
           (fail 1)))

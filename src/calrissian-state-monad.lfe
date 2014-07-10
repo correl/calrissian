@@ -1,6 +1,6 @@
-(defmodule state-monad
-  (behaviour monad)
-  (behaviour state)
+(defmodule calrissian-state-monad
+  (behaviour calrissian-monad)
+  (behaviour calrissian-state)
   (export (return 1)
           (fail 1)
           (run 2)

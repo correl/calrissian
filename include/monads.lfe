@@ -1,7 +1,7 @@
 (defmacro do-m args
   (let ((monad (car args))
         (statements (cdr args)))
-    (monad:do-transform monad statements)))
+    (calrissian-monad:do-transform monad statements)))
 
 (defmacro >>= (monad m f)
   `(call ,monad '>>= ,m ,f))

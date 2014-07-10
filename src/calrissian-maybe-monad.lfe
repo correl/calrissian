@@ -1,5 +1,5 @@
-(defmodule maybe-monad
-  (behaviour monad)
+(defmodule calrissian-maybe-monad
+  (behaviour calrissian-monad)
   (export (>>= 2)
           (return 1)
           (fail 1)))

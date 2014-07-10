@@ -1,4 +1,4 @@
-(defmodule monad
+(defmodule calrissian-monad
   (export (behaviour_info 1)
           (do-transform 2)))
 
