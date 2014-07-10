@@ -1,7 +1,11 @@
 (defmacro monad (name)
-  `(list_to_atom (lists:flatten (list "calrissian-"
-                                      (atom_to_list ,name)
-                                      "-monad"))))
+  (case name
+    ;; Provide the state monad in terms of the state transformer
+    (''state `(transformer 'state 'identity))
+    (_
+     `(list_to_atom (lists:flatten (list "calrissian-"
+                                         (atom_to_list ,name)
+                                         "-monad"))))))
 
 (defmacro transformer (name inner-monad)
   `(tuple (list_to_atom (lists:flatten (list "calrissian-"
