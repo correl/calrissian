@@ -5,15 +5,18 @@
   {description, "Monads for LFE"},
 
   %% The version of the application
-  {vsn, "0.0.1"},
+  {vsn, "0.1.0"},
 
   %% All modules used by the application.
   {modules,
    [
-    'monad',
-    'maybe-monad',
-    'identity-monad',
-    'error-monad'
+    'calrissian-monad',
+    'calrissian-state',
+    'calrissian-identity-monad',
+    'calrissian-maybe-monad',
+    'calrissian-error-monad',
+    'calrissian-state-transformer',
+    'calrissian-util'
    ]},
 
   %% All of the registered names the application uses. This can be ignored.

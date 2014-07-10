@@ -7,9 +7,13 @@ Introduction
 ============
 
 Calrissian is an implementation of monads in LFE, inspired by
-`erlando`_, mostly as a learning exercise. So far, only the Maybe,
-Error and Identity monads are supported.
+`erlando`_, mostly as a learning exercise. The following monads are currently supported:
 
+* Identity
+* Maybe
+* Error
+* State
+* State Transformer
 
 Dependencies
 ------------
@@ -70,7 +74,7 @@ and execution will cease.
     (include-lib "deps/calrissian/include/monads.lfe")
 
     (defun dostuff ()
-           (do-m error-monad
+           (do-m (monad 'error)
                  (input <- (fetch-input))        ;; fetch-input -> (tuple 'ok result) | (tuple 'error reason)
                  (parsed <- (parse-input input)) ;; parse-input -> (tuple 'ok result) | (tuple 'error reason)
                  (store-data parsed)))           ;; store-data -> 'ok | (tuple 'error reason)
