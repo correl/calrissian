@@ -9,4 +9,4 @@
 (include-lib "include/monads.lfe")
 (include-lib "include/monad-tests.lfe")
 
-(test-monad 'calrissian-state-monad)
+(test-monad (monad 'state))

@@ -9,28 +9,28 @@
 (include-lib "include/monads.lfe")
 (include-lib "include/monad-tests.lfe")
 
-(test-monad 'calrissian-error-monad)
+(test-monad (monad 'error))
 
 (deftest return-ok
   (is-equal 'ok
-            (return 'calrissian-error-monad 'ok)))
+            (return (monad 'error) 'ok)))
 
 (deftest return-value
   (is-equal #(ok 123)
-            (return 'calrissian-error-monad 123)))
+            (return (monad 'error) 123)))
 
 (deftest fail-with-reason
   (is-equal #(error reason)
-            (fail 'calrissian-error-monad 'reason)))
+            (fail (monad 'error) 'reason)))
 
 (deftest fail-short-circuits-value
-  (is-equal (fail 'calrissian-error-monad 'something-bad)
-            (>> 'calrissian-error-monad
-                (fail 'calrissian-error-monad 'something-bad)
-                (return 'calrissian-error-monad 123))))
+  (is-equal (fail (monad 'error) 'something-bad)
+            (>> (monad 'error)
+                (fail (monad 'error) 'something-bad)
+                (return (monad 'error) 123))))
 
 (deftest fail-short-circuits-error
   (is-equal #(error something-bad)
-            (>> 'calrissian-error-monad
-                (fail 'calrissian-error-monad 'something-bad)
+            (>> (monad 'error)
+                (fail (monad 'error) 'something-bad)
                 (throw 'error))))

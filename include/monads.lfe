@@ -1,3 +1,14 @@
+(defmacro monad (name)
+  `(list_to_atom (lists:flatten (list "calrissian-"
+                                      (atom_to_list ,name)
+                                      "-monad"))))
+
+(defmacro transformer (name inner-monad)
+  `(tuple (list_to_atom (lists:flatten (list "calrissian-"
+                                             (atom_to_list ,name)
+                                             "-transformer")))
+          (monad ,inner-monad)))
+
 (defmacro do-m args
   (let ((monad (car args))
         (statements (cdr args)))

@@ -9,22 +9,22 @@
 (include-lib "include/monads.lfe")
 (include-lib "include/monad-tests.lfe")
 
-(test-monad 'calrissian-maybe-monad)
+(test-monad (monad 'maybe))
 
 (deftest nothing-short-circuits-value
   (is-equal 'nothing
-            (>>= 'calrissian-maybe-monad 'nothing
+            (>>= (monad 'maybe) 'nothing
                        (lambda (x) (+ 5 x)))))
 
 (deftest nothing-short-circuits-error
   (is-equal 'nothing
-            (>>= 'calrissian-maybe-monad 'nothing
+            (>>= (monad 'maybe) 'nothing
                        (lambda (_) (error 'bad-func)))))
 
 (deftest fold-increment-value
   (is-equal #(just 3)
-            (let ((minc (lambda (x) (return 'calrissian-maybe-monad (+ 1 x))))
-                  (bind (lambda (f m) (>>= 'calrissian-maybe-monad m f))))
+            (let ((minc (lambda (x) (return (monad 'maybe) (+ 1 x))))
+                  (bind (lambda (f m) (>>= (monad 'maybe) m f))))
               (lists:foldr bind
                            #(just 0)
                            (list minc

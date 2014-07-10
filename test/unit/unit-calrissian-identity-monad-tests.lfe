@@ -9,12 +9,12 @@
 (include-lib "include/monads.lfe")
 (include-lib "include/monad-tests.lfe")
 
-(test-monad 'calrissian-identity-monad)
+(test-monad (monad 'identity))
 
 (deftest identity
   (is-equal 'ok
-            (return 'calrissian-identity-monad 'ok)))
+            (return (monad 'identity) 'ok)))
 
 (deftest fail-with-error
   (is-throw #(error value)
-            (fail 'calrissian-identity-monad 'value)))
+            (fail (monad 'identity) 'value)))
