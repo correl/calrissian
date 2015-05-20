@@ -10,5 +10,8 @@
   (((tuple 'just x) f)
    (funcall f x)))
 
-(defun return (x) (tuple 'just x))
-(defun fail (_) 'nothing)
+(defun return (x)
+  (tuple 'just x))
+
+(defun fail (_)
+  'nothing)
