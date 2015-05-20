@@ -71,7 +71,7 @@ and execution will cease.
 
 .. code:: scheme
 
-    (include-lib "deps/calrissian/include/monads.lfe")
+    (include-lib "calrissian/include/monads.lfe")
 
     (defun dostuff ()
       (do-m (monad 'error)
