@@ -9,7 +9,7 @@ OUT_DIR = ./ebin
 TEST_DIR = ./test
 TEST_OUT_DIR = ./.eunit
 SCRIPT_PATH=$(DEPS)/lfe/bin:.:./bin:"$(PATH)":/usr/local/bin
-ERL_LIBS=$(shell $(LFETOOL) info erllibs)
+ERL_LIBS=$(shell pwd):$(shell $(LFETOOL) info erllibs)
 EMPTY =
 ifeq ($(shell which lfetool),$EMPTY)
 	LFETOOL=$(BIN_DIR)/lfetool

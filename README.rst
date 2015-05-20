@@ -71,28 +71,28 @@ and execution will cease.
 
 .. code:: scheme
 
-    (include-lib "deps/calrissian/include/monads.lfe")
+    (include-lib "calrissian/include/monads.lfe")
 
     (defun dostuff ()
-           (do-m (monad 'error)
-                 (input <- (fetch-input))        ;; fetch-input -> (tuple 'ok result) | (tuple 'error reason)
-                 (parsed <- (parse-input input)) ;; parse-input -> (tuple 'ok result) | (tuple 'error reason)
-                 (store-data parsed)))           ;; store-data -> 'ok | (tuple 'error reason)
+      (do-m (monad 'error)
+            (input <- (fetch-input))        ;; fetch-input -> (tuple 'ok result) | (tuple 'error reason)
+            (parsed <- (parse-input input)) ;; parse-input -> (tuple 'ok result) | (tuple 'error reason)
+            (store-data parsed)))           ;; store-data -> 'ok | (tuple 'error reason)
 
 Without the error monad, the code might have looked like this:
 
 .. code:: scheme
 
     (defun dostuff ()
-           (case (fetch-input)
-                 ((tuple 'error reason)
-                  (tuple 'error reason))
-                 ((tuple 'ok input)
-                  (case (parse-input input)
-                        ((tuple 'error reason)
-                         (tuple 'error reason))
-                        ((tuple 'ok parsed)
-                         (store-data parsed))))))
+      (case (fetch-input)
+        ((tuple 'error reason)
+         (tuple 'error reason))
+        ((tuple 'ok input)
+         (case (parse-input input)
+           ((tuple 'error reason)
+            (tuple 'error reason))
+           ((tuple 'ok parsed)
+            (store-data parsed))))))
 
 .. Links
 .. -----
