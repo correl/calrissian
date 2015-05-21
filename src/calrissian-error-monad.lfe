@@ -5,9 +5,9 @@
           (fail 1)))
 
 (defun >>=
-  (((tuple 'error reason) f)
-   (tuple 'error reason))
-  (((tuple 'ok value) f)
+  ((`#(error ,reason) f)
+   `#(error ,reason))
+  ((`#(ok ,value) f)
    (funcall f value))
   (('ok f)
    (funcall f 'ok)))
@@ -16,7 +16,7 @@
   (('ok)
    'ok)
   ((x)
-   (tuple 'ok x)))
+   `#(ok ,x)))
 
 (defun fail (reason)
-  (tuple 'error reason))
+  `#(error ,reason))

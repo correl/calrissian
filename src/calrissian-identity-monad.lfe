@@ -10,4 +10,4 @@
 (defun return (x) x)
 
 (defun fail (x)
-  (throw (tuple 'error x)))
+  (throw `#(error ,x)))

@@ -7,11 +7,11 @@
 (defun >>=
   (('nothing f)
    'nothing)
-  (((tuple 'just x) f)
+  ((`#(just ,x) f)
    (funcall f x)))
 
 (defun return (x)
-  (tuple 'just x))
+  `#(just ,x))
 
 (defun fail (_)
   'nothing)
