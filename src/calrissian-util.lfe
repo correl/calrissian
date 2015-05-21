@@ -1,8 +1,17 @@
 (defmodule calrissian-util
-  (export (module-info 1)
+  (export (get-version 0)
+          (get-versions 0)
+          (module-info 1)
           (module-info 2)
           (implements? 2)
           (exports? 2)))
+
+(defun get-version ()
+  (lutil:get-app-version 'calrissian))
+
+(defun get-versions ()
+  (++ (lutil:get-versions)
+      `(#(calrissian ,(get-version)))))
 
 (defun module-info
   (((tuple module _args))
