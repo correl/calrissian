@@ -1,19 +1,28 @@
 (defmodule calrissian-util
-  (export (module-info 1)
+  (export (get-version 0)
+          (get-versions 0)
+          (module-info 1)
           (module-info 2)
           (implements? 2)
           (exports? 2)))
 
+(defun get-version ()
+  (lutil:get-app-version 'calrissian))
+
+(defun get-versions ()
+  (++ (lutil:get-versions)
+      `(#(calrissian ,(get-version)))))
+
 (defun module-info
-  (((tuple module _args))
+  ((`#(,module ,_args))
    ;; Report exported function arities as (arity - 1) to account for
    ;; the extra argument supplied to tuple modules
    (let ((fix-info (lambda (info-plist)
                      (let* ((exports (proplists:get_value 'exports info-plist))
                             (fix-arity (match-lambda
                                          ;; module_info is added by the compiler and therefore remains as-is
-                                         (((tuple 'module_info arity)) (tuple 'module_info arity))
-                                         (((tuple fun arity)) (tuple fun (- arity 1)))))
+                                         ((`#(module_info ,arity)) `#(module_info ,arity))
+                                         ((`#(,fun ,arity)) `#(,fun ,(- arity 1)))))
                             (info-dict (dict:from_list info-plist))
                             (new-dict (dict:store 'exports (lists:map fix-arity exports) info-dict))
                             (new-plist (dict:to_list new-dict)))

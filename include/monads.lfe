@@ -3,14 +3,14 @@
     ;; Provide the state monad in terms of the state transformer
     (''state `(transformer 'state 'identity))
     (_
-     `(list_to_atom (lists:flatten (list "calrissian-"
-                                         (atom_to_list ,name)
-                                         "-monad"))))))
+     `(list_to_atom (lists:flatten `("calrissian-"
+                                     ,(atom_to_list ,name)
+                                     "-monad"))))))
 
 (defmacro transformer (name inner-monad)
-  `(tuple (list_to_atom (lists:flatten (list "calrissian-"
-                                             (atom_to_list ,name)
-                                             "-transformer")))
+  `(tuple (list_to_atom (lists:flatten `("calrissian-"
+                                         ,(atom_to_list ,name)
+                                         "-transformer")))
           (monad ,inner-monad)))
 
 (defmacro do-m args
@@ -31,7 +31,7 @@
   `(call ,monad 'fail ,expr))
 
 (defmacro sequence (monad list)
-  `(: lists foldr
+  `(lists:foldr
      (lambda (m acc) (mcons ,monad m acc))
      (return ,monad [])
      ,list))
