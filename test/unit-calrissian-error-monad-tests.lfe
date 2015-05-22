@@ -1,13 +1,10 @@
 (defmodule unit-calrissian-error-monad-tests
-  (export all)
-  (import
-    (from lfeunit-util
-      (check-failed-assert 2)
-      (check-wrong-assert-exception 2))))
+  (behaviour ltest-unit)
+  (export all))
 
-(include-lib "deps/lfeunit/include/lfeunit-macros.lfe")
-(include-lib "include/monads.lfe")
-(include-lib "include/monad-tests.lfe")
+(include-lib "ltest/include/ltest-macros.lfe")
+(include-lib "calrissian/include/monads.lfe")
+(include-lib "calrissian/include/monad-tests.lfe")
 
 (test-monad (monad 'error))
 
