@@ -8,4 +8,6 @@
   (funcall f x))
 
 (defun return (x) x)
-(defun fail (x) (throw (tuple 'error x)))
+
+(defun fail (x)
+  (throw `#(error ,x)))
