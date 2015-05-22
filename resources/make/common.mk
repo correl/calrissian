@@ -114,15 +114,3 @@ check-all: get-deps clean-eunit compile-no-deps
 check: check-unit-with-deps
 
 check-travis: $(BIN_DIR)/lfetool check
-
-push-all:
-	@echo "Pusing code to github ..."
-	git push --all
-	git push upstream --all
-	git push --tags
-	git push upstream --tags
-
-install: compile
-	@echo "Installing lumberjack ..."
-	@PATH=$(SCRIPT_PATH) lfetool install lfe
-
