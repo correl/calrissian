@@ -28,6 +28,9 @@ endif
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
+$(BIN_DIR)/lfetool: $(BIN_DIR)
+	@make get-lfetool
+
 get-lfetool: $(BIN_DIR)
 	curl -L -o ./lfetool https://raw.github.com/lfe/lfetool/dev-v1/lfetool && \
 	chmod 755 ./lfetool && \
@@ -110,7 +113,7 @@ check-all: get-deps clean-eunit compile-no-deps
 
 check: check-unit-with-deps
 
-check-travis: $(LFETOOL) check
+check-travis: $(BIN_DIR)/lfetool check
 
 push-all:
 	@echo "Pusing code to github ..."
