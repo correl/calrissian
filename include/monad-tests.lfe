@@ -1,5 +1,5 @@
 (defmacro evaluate-m (monad mval)
-  `(cond ((: calrissian-util implements? 'calrissian-state ,monad)
+  `(cond ((calrissian-util:implements? 'calrissian-state ,monad)
           (call ,monad 'run ,mval 'undefined))
          ('true ,mval)))
 
