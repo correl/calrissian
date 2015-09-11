@@ -8,16 +8,7 @@
   {vsn, "0.1.0"},
 
   %% All modules used by the application.
-  {modules,
-   [
-    'calrissian-monad',
-    'calrissian-state',
-    'calrissian-identity-monad',
-    'calrissian-maybe-monad',
-    'calrissian-error-monad',
-    'calrissian-state-transformer',
-    'calrissian-util'
-   ]},
+  {modules, []},
 
   %% All of the registered names the application uses. This can be ignored.
   {registered, []},
