@@ -1,7 +1,7 @@
 (defmodule calrissian-state-transformer
   (export all))
 
-(include-lib "include/monads.lfe")
+(include-lib "calrissian/include/monads.lfe")
 
 (defun new (inner-monad)
   `#(calrissian-state-transformer ,inner-monad))
